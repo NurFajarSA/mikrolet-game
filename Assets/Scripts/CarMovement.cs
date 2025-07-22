@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarMovement : MonoBehaviour
 {
-    public float verticalInput = 0f;
-    public float horizontalInput = 0f;
+    // public float verticalInput = 0f;
+    // public float horizontalInput = 0f;
 
     [Header("Speed Settings")]
-    public float maxForwardSpeed = 100f;
+    public float maxForwardSpeed = 50f;
     public float maxReverseSpeed = 30f;
     public float acceleration = 50f;
     public float braking = 80f;
@@ -30,8 +30,8 @@ public class CarMovement : MonoBehaviour
     [Range(0.1f, 2.0f)] public float reverseMaxPitch = 0.6f;
 
     private float currentSpeed = 0f;
-    // public float verticalInput;
-    // public float horizontalInput;
+    public float verticalInput;
+    public float horizontalInput;
     private Rigidbody rb;
 
     void Awake()
@@ -42,8 +42,8 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     {
-        // verticalInput = Input.GetAxis("Vertical");
-        // horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
 
         ApplySteering();
         ApplyWheelVisual();
