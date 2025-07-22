@@ -29,6 +29,11 @@ public class CarMovement : MonoBehaviour
     [Range(0.1f, 1.0f)] public float reverseMaxVolume = 0.5f;
     [Range(0.1f, 2.0f)] public float reverseMaxPitch = 0.6f;
 
+    [Header("Passenger & Destination Settings")]
+    private Vector3 targetDestination;
+    private bool hasPassenger = false;
+    [SerializeField] private DestinationSpawner destinationSpawner;
+
     private float currentSpeed = 0f;
     public float verticalInput;
     public float horizontalInput;
@@ -72,7 +77,7 @@ public class CarMovement : MonoBehaviour
         }
 
         Vector3 desiredVelocity = transform.forward * currentSpeed;
-        rb.linearVelocity = new Vector3(desiredVelocity.x, rb.linearVelocity.y, desiredVelocity.z); 
+        rb.linearVelocity = new Vector3(desiredVelocity.x, rb.linearVelocity.y, desiredVelocity.z);
     }
 
     void ApplySteering()
@@ -129,6 +134,31 @@ public class CarMovement : MonoBehaviour
             Debug.Log("Triggered with: " + other.gameObject.name + " | ID: " + passengerScript.passengerID + " | Destination: " + passengerScript.destination);
 
             other.gameObject.SetActive(false);
+
+            if (destinationSpawner != null)
+            {
+                destinationSpawner.SpawnDestination(passengerScript.destination);
+                SetDestination(passengerScript.destination);
+            }
+            else
+            {
+                Debug.LogError("DestinationSpawner reference is missing!");
+            }
         }
+        else if (other.gameObject.CompareTag("Destination"))
+        {
+            Destroy(other.gameObject);
+            hasPassenger = false;
+            
+            Debug.Log("Passenger dropped off successfully!");
+        }
+    }
+    
+    public void SetDestination(Vector3 destination)
+    {
+        targetDestination = destination;
+        hasPassenger = true;
+
+        Debug.Log("Passenger on board! Go to: " + destination);
     }
 }
