@@ -1,0 +1,14 @@
+using UnityEngine;
+
+public class MinimapFollow : MonoBehaviour
+{
+    public Transform target;
+    public Vector3 offset = new Vector3(0f, 44f, 0f);
+
+    void LateUpdate()
+    {
+        if (target == null) return;
+        transform.position = target.position + offset;
+        transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+}
