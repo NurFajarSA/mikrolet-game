@@ -119,4 +119,16 @@ public class CarMovement : MonoBehaviour
             reverseSound.volume = 0f;
         }
     }
+
+    /// PASSENGER & DESTINATION INTERACTION
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Passenger"))
+        {
+            Passenger passengerScript = other.gameObject.GetComponent<Passenger>();
+            Debug.Log("Triggered with: " + other.gameObject.name + " | ID: " + passengerScript.passengerID + " | Destination: " + passengerScript.destination);
+
+            other.gameObject.SetActive(false);
+        }
+    }
 }
