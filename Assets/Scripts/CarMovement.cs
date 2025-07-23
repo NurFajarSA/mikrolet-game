@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -29,15 +30,16 @@ public class CarMovement : MonoBehaviour
     [Range(0.1f, 1.0f)] public float reverseMaxVolume = 0.5f;
     [Range(0.1f, 2.0f)] public float reverseMaxPitch = 0.6f;
 
-    [Header("Passenger & Destination Settings")]
-    private Vector3 targetDestination;
-    private bool hasPassenger = false;
-    [SerializeField] private DestinationSpawner destinationSpawner;
-
     private float currentSpeed = 0f;
     public float verticalInput;
     public float horizontalInput;
     private Rigidbody rb;
+
+    [Header("Passenger & Destination Settings")]
+    [SerializeField] private DestinationSpawner destinationSpawner;
+    private List<int> currentPassengers = new List<int>();
+    private List<Vector3> currentDestinations = new List<Vector3>();
+    private const int maxPassengers = 4;
 
     void Awake()
     {
@@ -130,35 +132,87 @@ public class CarMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Passenger"))
         {
+            if (currentPassengers.Count >= maxPassengers)
+            {
+                Debug.Log("Angkot is full! Cannot add more passengers.");
+                return;
+            }
+
             Passenger passengerScript = other.gameObject.GetComponent<Passenger>();
             Debug.Log("Triggered with: " + other.gameObject.name + " | ID: " + passengerScript.passengerID + " | Destination: " + passengerScript.destination);
+
+            currentPassengers.Add(passengerScript.passengerID);
+            currentDestinations.Add(passengerScript.destination);
+
+            if (PassengerUIManager.Instance != null)
+            {
+                PassengerUIManager.Instance.AddPassenger(passengerScript.passengerID);
+            }
 
             other.gameObject.SetActive(false);
 
             if (destinationSpawner != null)
             {
                 destinationSpawner.SpawnDestination(passengerScript.destination);
-                SetDestination(passengerScript.destination);
             }
             else
             {
                 Debug.LogError("DestinationSpawner reference is missing!");
             }
+
+            Debug.Log($"Passenger {passengerScript.passengerID} is on board! Total passengers: {currentPassengers.Count}/{maxPassengers}");
+            
+            if (currentPassengers.Count >= maxPassengers && PassengerCollisionManager.Instance != null)
+            {
+                PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
+                Debug.Log("Angkot is full! All passenger collisions disabled.");
+            }
         }
         else if (other.gameObject.CompareTag("Destination"))
         {
+            if (currentPassengers.Count > 0)
+            {
+                int droppedPassengerID = currentPassengers[0];
+                currentPassengers.RemoveAt(0);
+                currentDestinations.RemoveAt(0);
+
+                if (PassengerUIManager.Instance != null)
+                {
+                    PassengerUIManager.Instance.RemovePassenger();
+                }
+
+                Debug.Log($"Passenger {droppedPassengerID} is off board! Total passengers: {currentPassengers.Count}/{maxPassengers}");
+
+                if (currentPassengers.Count < maxPassengers && PassengerCollisionManager.Instance != null)
+                {
+                    PassengerCollisionManager.Instance.EnableAllPassengerCollisions();
+                    Debug.Log("There is an empty seat! Passenger collision enabled again.");
+                }
+            }
+
             Destroy(other.gameObject);
-            hasPassenger = false;
-            
+
             Debug.Log("Passenger dropped off successfully!");
         }
     }
-    
-    public void SetDestination(Vector3 destination)
-    {
-        targetDestination = destination;
-        hasPassenger = true;
 
-        Debug.Log("Passenger on board! Go to: " + destination);
+    public int GetCurrentPassengerCount()
+    {
+        return currentPassengers.Count;
+    }
+    
+    public bool IsAngkotFull()
+    {
+        return currentPassengers.Count >= maxPassengers;
+    }
+    
+    public bool HasPassengers()
+    {
+        return currentPassengers.Count > 0;
+    }
+    
+    public List<int> GetCurrentPassengerIDs()
+    {
+        return new List<int>(currentPassengers);
     }
 }
