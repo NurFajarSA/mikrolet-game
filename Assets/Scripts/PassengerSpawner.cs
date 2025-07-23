@@ -71,7 +71,7 @@ public class PassengerSpawner : MonoBehaviour
     void Start()
     {
         // SpawnPassenger();
-        SpawnMultiplePassengers(16);
+        SpawnMultiplePassengers(20);
     }
 
     void SpawnPassenger()

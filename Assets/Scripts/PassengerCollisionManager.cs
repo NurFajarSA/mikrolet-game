@@ -3,59 +3,53 @@ using UnityEngine;
 public class PassengerCollisionManager : MonoBehaviour
 {
     public static PassengerCollisionManager Instance;
-    
+
+    private Passenger[] allPassengers;
+
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
     }
-    
-    public void SetPassengerPhysics(GameObject passenger, bool canBePickedUp)
+
+    void Start()
     {
-        Collider passengerCollider = passenger.GetComponent<Collider>();
-        
-        if (passengerCollider != null)
-        {
-            if (canBePickedUp)
-            {
-                passengerCollider.isTrigger = true;
-            }
-            else
-            {
-                passengerCollider.isTrigger = true;
-                
-                Rigidbody passengerRb = passenger.GetComponent<Rigidbody>();
-                if (passengerRb != null)
-                {
-                    passengerRb.isKinematic = true;
-                }
-            }
-        }
+        allPassengers = FindObjectsByType<Passenger>(FindObjectsSortMode.None);
     }
-    
+
     public void DisableAllPassengerCollisions()
     {
-        GameObject[] passengers = GameObject.FindGameObjectsWithTag("Passenger");
-        
-        foreach (GameObject passenger in passengers)
+        foreach (var passenger in allPassengers)
         {
-            SetPassengerPhysics(passenger, false);
+            if (passenger != null && passenger.gameObject.activeInHierarchy)
+            {
+                Collider col = passenger.GetComponent<Collider>();
+                if (col != null)
+                    col.enabled = false;
+            }
         }
     }
-    
+
     public void EnableAllPassengerCollisions()
     {
-        GameObject[] passengers = GameObject.FindGameObjectsWithTag("Passenger");
-        
-        foreach (GameObject passenger in passengers)
+        foreach (var passenger in allPassengers)
         {
-            SetPassengerPhysics(passenger, true);
+            if (passenger != null && passenger.gameObject.activeInHierarchy)
+            {
+                Collider col = passenger.GetComponent<Collider>();
+                if (col != null)
+                    col.enabled = true;
+            }
         }
+    }
+
+    public void LogCurrentCollisionStates()
+    {
+        int enabledCount = 0;
+        foreach (var passenger in allPassengers)
+        {
+            if (passenger != null && passenger.GetComponent<Collider>().enabled)
+                enabledCount++;
+        }
+        Debug.Log("Enabled passenger colliders: " + enabledCount);
     }
 }

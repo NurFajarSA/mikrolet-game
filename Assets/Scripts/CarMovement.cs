@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CarMovement : MonoBehaviour
@@ -134,11 +134,26 @@ public class CarMovement : MonoBehaviour
         {
             if (currentPassengers.Count >= maxPassengers)
             {
-                Debug.Log("Angkot is full! Cannot add more passengers.");
+                Debug.Log("Angkot is full! Cannot add more passengers. Ignoring collision.");
+                
+                Collider col = other.GetComponent<Collider>();
+                if (col != null)
+                {
+                    col.enabled = false;
+                    Debug.Log("Disabled collider of " + other.gameObject.name);
+                }
+
                 return;
             }
 
             Passenger passengerScript = other.gameObject.GetComponent<Passenger>();
+
+            if (passengerScript == null)
+            {
+                Debug.LogError("Passenger script not found on collided object!");
+                return;
+            }
+
             Debug.Log("Triggered with: " + other.gameObject.name + " | ID: " + passengerScript.passengerID + " | Destination: " + passengerScript.destination);
 
             currentPassengers.Add(passengerScript.passengerID);
@@ -160,12 +175,15 @@ public class CarMovement : MonoBehaviour
                 Debug.LogError("DestinationSpawner reference is missing!");
             }
 
-            Debug.Log($"Passenger {passengerScript.passengerID} is on board! Total passengers: {currentPassengers.Count}/{maxPassengers}");
-            
-            if (currentPassengers.Count >= maxPassengers && PassengerCollisionManager.Instance != null)
+            Debug.Log($"Passenger {passengerScript.passengerID} picked up! Total passengers: {currentPassengers.Count}/{maxPassengers}");
+
+            if (currentPassengers.Count >= maxPassengers)
             {
-                PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
-                Debug.Log("Angkot is full! All passenger collisions disabled.");
+                if (PassengerCollisionManager.Instance != null)
+                {
+                    PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
+                    Debug.Log("Angkot is full! Passenger collisions disabled.");
+                }
             }
         }
         else if (other.gameObject.CompareTag("Destination"))
@@ -181,12 +199,17 @@ public class CarMovement : MonoBehaviour
                     PassengerUIManager.Instance.RemovePassenger();
                 }
 
-                Debug.Log($"Passenger {droppedPassengerID} is off board! Total passengers: {currentPassengers.Count}/{maxPassengers}");
+                Debug.Log($"Passenger {droppedPassengerID} dropped off! Total passengers: {currentPassengers.Count}/{maxPassengers}");
 
-                if (currentPassengers.Count < maxPassengers && PassengerCollisionManager.Instance != null)
+                if (currentPassengers.Count < maxPassengers)
                 {
-                    PassengerCollisionManager.Instance.EnableAllPassengerCollisions();
-                    Debug.Log("There is an empty seat! Passenger collision enabled again.");
+                    if (PassengerCollisionManager.Instance != null)
+                    {
+                        PassengerCollisionManager.Instance.EnableAllPassengerCollisions();
+                        Debug.Log("Space available! Passenger collisions enabled.");
+
+                        PassengerCollisionManager.Instance.LogCurrentCollisionStates();
+                    }
                 }
             }
 
@@ -195,7 +218,7 @@ public class CarMovement : MonoBehaviour
             Debug.Log("Passenger dropped off successfully!");
         }
     }
-
+    
     public int GetCurrentPassengerCount()
     {
         return currentPassengers.Count;
