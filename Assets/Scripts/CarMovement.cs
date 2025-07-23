@@ -15,7 +15,7 @@ public class CarMovement : MonoBehaviour
     public float coastingDrag = 10f;
 
     [Header("Steering")]
-    public float turnSpeed = 5f;
+    public float turnSpeed = 20f;
 
     [Header("Visual")]
     public Transform wheelFL;
@@ -94,7 +94,7 @@ public class CarMovement : MonoBehaviour
 
     void ApplyWheelVisual()
     {
-        float wheelTurnAngle = horizontalInput * 30f;
+        float wheelTurnAngle = horizontalInput * 10f;
 
         if (wheelFL != null)
             wheelFL.localRotation = Quaternion.Euler(0f, wheelTurnAngle, 0f);
@@ -161,7 +161,7 @@ public class CarMovement : MonoBehaviour
             }
 
             Debug.Log($"Passenger {passengerScript.passengerID} is on board! Total passengers: {currentPassengers.Count}/{maxPassengers}");
-            
+
             if (currentPassengers.Count >= maxPassengers && PassengerCollisionManager.Instance != null)
             {
                 PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
@@ -200,17 +200,17 @@ public class CarMovement : MonoBehaviour
     {
         return currentPassengers.Count;
     }
-    
+
     public bool IsAngkotFull()
     {
         return currentPassengers.Count >= maxPassengers;
     }
-    
+
     public bool HasPassengers()
     {
         return currentPassengers.Count > 0;
     }
-    
+
     public List<int> GetCurrentPassengerIDs()
     {
         return new List<int>(currentPassengers);
