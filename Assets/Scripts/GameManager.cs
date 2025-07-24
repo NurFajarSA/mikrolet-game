@@ -6,11 +6,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("UI & Control")]
     public TMP_Text countdownText;
     public CarMovement carMovement;
     public float countdownDuration = 1f;
 
     private bool gameStarted = false;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip startMusic;
+    public AudioClip backgroundMusic;
+
 
     void Awake()
     {
@@ -32,6 +39,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartCountdown()
     {
+        if (audioSource != null && startMusic != null)
+        {
+            audioSource.clip = startMusic;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+
         countdownText.gameObject.SetActive(true);
 
         for (int i = 3; i > 0; i--)
@@ -44,6 +58,13 @@ public class GameManager : MonoBehaviour
         countdownText.text = "GO!";
         yield return new WaitForSeconds(0.5f);
         countdownText.gameObject.SetActive(false);
+
+        if (audioSource != null && backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
 
         gameStarted = true;
         if (carMovement != null)
