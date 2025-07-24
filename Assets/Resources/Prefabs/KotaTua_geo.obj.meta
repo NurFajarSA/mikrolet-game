@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 19492f602e2f24d6c932400f57a50023
+guid: 9a1f0c8ea15e747e793b28dda9bf6815
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: defaultMat
-    second: {fileID: 2100000, guid: ab6e1ffdb4ed94f1da8d73c645779dc7, type: 2}
+      name: KotaTua_geo_Asset_grpMat
+    second: {fileID: 2100000, guid: 572a7e1414151430c994421164832690, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

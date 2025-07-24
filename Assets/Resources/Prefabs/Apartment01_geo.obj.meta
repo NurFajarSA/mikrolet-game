@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 19492f602e2f24d6c932400f57a50023
+guid: 31cc9624680b44e18833e10417eee0af
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,12 +7,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: defaultMat
-    second: {fileID: 2100000, guid: ab6e1ffdb4ed94f1da8d73c645779dc7, type: 2}
+      name: Apartment01_geo_Asset_grpMat
+    second: {fileID: 2100000, guid: cc9fb473dcabe4f1ab38fe41f197d47a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3SG
+    second: {fileID: 2100000, guid: f3a3c5aefae7c4282b0f63f8177fa475, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 0
-    materialSearch: 1
+    materialName: 2
+    materialSearch: 0
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
