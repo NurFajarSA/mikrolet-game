@@ -9,63 +9,63 @@ public class PassengerSpawner : MonoBehaviour
     private Vector3[] spawnPoints = new Vector3[]
     {
         // North East Passenger
-        new Vector3(-48, 1, 156.5f),
-        new Vector3(-48, 1, 130.5f),
-        new Vector3(-48, 1, 78),
-        new Vector3(51.5f, 1, 56),
-        new Vector3(51.5f, 1, 78),
+        new Vector3(57.2f, 1, 51),
+        new Vector3(156, 1, 62.3f),
+        new Vector3(156.9f, 1, 25.8f),
+        new Vector3(56.5f, 1, 106.5f),
+        new Vector3(61.2f, 1, 140.4f),
 
         // North West Passenger
-        new Vector3(-124, 1, 74),
-        new Vector3(-101, 1, 152),
-        new Vector3(-100, 1, 74),
-        new Vector3(-74, 1, 78),
-        new Vector3(-74, 1, 160),
+        new Vector3(27.5f, 1, 75.8f),
+        new Vector3(0.8f, 1, 50.7f),
+        new Vector3(-20.3f, 1, 81.8f),
+        new Vector3(-4f, 1, 140.4f),
+        new Vector3(27.3f, 1, 132f),
 
         // South East Passenger
-        new Vector3(-46, 1, 24),
-        new Vector3(-30, 1, -9),
-        new Vector3(-30, 1, 47.5f),
-        new Vector3(23.5f, 1, 5),
-        new Vector3(55, 1, 24),
+        new Vector3(75.3f, 1, 20.2f),
+        new Vector3(55.1f, 1, -52.2f),
+        new Vector3(55.6f, 1, -5.9f),
+        new Vector3(156.6f, 1, -2.2f),
+        new Vector3(131.8f, 1, -52.3f),
 
         // South West Passenger
-        new Vector3(-151, 1, 36),
-        new Vector3(-111.5f, 1, 5),
-        new Vector3(-101, 1, 28),
-        new Vector3(-75, 1, -13),
-        new Vector3(-74, 1, 51.5f),
+        new Vector3(-16.7f, 1, -28.6f),
+        new Vector3(-62.9f, 1, 17.1f),
+        new Vector3(10.9f, 1, 19.7f),
+        new Vector3(27.4f, 1, -37.4f),
+        new Vector3(-17.7f, 1, -3.1f),
     };
 
     private Vector3[] destinationPoints = new Vector3[]
     {
         // North East Destination
-        new Vector3(-63, 0.04f, 113),
-        new Vector3(-24, 0.04f, 127.5f),
-        new Vector3(-6.5f, 0.04f, 75),
-        new Vector3(-6.5f, 0.04f, 150),
-        new Vector3(24, 0.04f, 102),
+        new Vector3(119.4f, 0.04f, 83.2f),
+        new Vector3(132.3f, 0.04f, 112.8f),
+        new Vector3(142.5f, 0.04f, 21.5f),
+        new Vector3(178.6f, 0.04f, 48.5f),
+        new Vector3(77.9f, 0.04f, 37.2f),
 
         // North West Destination
-        new Vector3(-106, 0.04f, 137),
-        new Vector3(-108, 0.04f, 101),
-        new Vector3(-88, 0.04f, 77),
-        new Vector3(-83, 0.04f, 157.5f),
-        new Vector3(-65, 0.04f, 134),
+        new Vector3(29.8f, 0.04f, 78.7f),
+        new Vector3(75.2f, 0.04f, 73f),
+        new Vector3(1.6f, 0.04f, 24.3f),
+        new Vector3(73.9f, 0.04f, 116.2f),
+        new Vector3(62.6f, 0.04f, 24.2f),
 
         // South East Destination
-        new Vector3(-7, 0.04f, -12),
-        new Vector3(10.5f, 0.04f, 24),
-        new Vector3(20, 0.04f, 48.5f),
-        new Vector3(45, 0.04f, -7.5f),
-        new Vector3(52.5f, 0.04f, 35),
+        new Vector3(200.7f, 0.04f, -73f),
+        new Vector3(135.4f, 0.04f, -82f),
+        new Vector3(146.5f, 0.04f, -33.2f),
+        new Vector3(102, 0.04f, -10),
+        new Vector3(204.9f, 0.04f, -14.3f),
 
         // South West Destination
-        new Vector3(-145.5f, 0.04f, -3.5f),
-        new Vector3(-98, 0.04f, -12),
-        new Vector3(-124, 0.04f, 25),
-        new Vector3(-103, 0.04f, 54),
-        new Vector3(-148.5f, 0.04f, 56)
+        new Vector3(-50, 0.04f, -81.4f),
+        new Vector3(-9.1f, 0.04f, -56.8f),
+        new Vector3(-43.2f, 0.04f, -32.6f),
+        new Vector3(-35.6f, 0.04f, -2.2f),
+        new Vector3(17.1f, 0.04f, -17)
     };
 
     void Start()
