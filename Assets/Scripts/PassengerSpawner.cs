@@ -9,32 +9,32 @@ public class PassengerSpawner : MonoBehaviour
     private Vector3[] spawnPoints = new Vector3[]
     {
         // North East Passenger
-        new Vector3(-48, 1, 156.5f),
-        new Vector3(-48, 1, 130.5f),
-        new Vector3(-48, 1, 78),
-        new Vector3(51.5f, 1, 56),
-        new Vector3(51.5f, 1, 78),
+        new Vector3(175, 0.8f, -213.5f),
+        new Vector3(204, 0.8f, -181f),
+        new Vector3(-48, 0.8f, 78),
+        new Vector3(51.5f, 0.8f, 56),
+        new Vector3(51.5f, 0.8f, 78),
 
         // North West Passenger
-        new Vector3(-124, 1, 74),
-        new Vector3(-101, 1, 152),
-        new Vector3(-100, 1, 74),
-        new Vector3(-74, 1, 78),
-        new Vector3(-74, 1, 160),
+        new Vector3(-124, 0.8f, 74),
+        new Vector3(-100.8f, 0.8f, 152),
+        new Vector3(-100, 0.8f, 74),
+        new Vector3(-74, 0.8f, 78),
+        new Vector3(-74, 0.8f, 160),
 
         // South East Passenger
-        new Vector3(-46, 1, 24),
-        new Vector3(-30, 1, -9),
-        new Vector3(-30, 1, 47.5f),
-        new Vector3(23.5f, 1, 5),
-        new Vector3(55, 1, 24),
+        new Vector3(-46, 0.8f, 24),
+        new Vector3(-30, 0.8f, -9),
+        new Vector3(-30, 0.8f, 47.5f),
+        new Vector3(23.5f, 0.8f, 5),
+        new Vector3(55, 0.8f, 24),
 
         // South West Passenger
-        new Vector3(-151, 1, 36),
-        new Vector3(-111.5f, 1, 5),
-        new Vector3(-101, 1, 28),
-        new Vector3(-75, 1, -13),
-        new Vector3(-74, 1, 51.5f),
+        new Vector3(-150.8f, 0.8f, 36),
+        new Vector3(-111.5f, 0.8f, 5),
+        new Vector3(-100.8f, 0.8f, 28),
+        new Vector3(-75, 0.8f, -13),
+        new Vector3(-74, 0.8f, 51.5f),
     };
 
     private Vector3[] destinationPoints = new Vector3[]
