@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [Header("UI & Control")]
     public TMP_Text countdownText;
     public TMP_Text gameCounterText;
-    private float gameTimeRemaining = 181f;
+    private float gameTimeRemaining = 10f;
     private bool isGameTimerRunning = false;
 
 
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
                 gameCounterText.text = "00:00";
 
                 // TODO: Panggil GameOver atau logic selesai game
+                carMovement.enabled = false;
+                MuteAllEngineSounds();
             }
             else
             {
