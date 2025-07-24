@@ -3,7 +3,7 @@ using UnityEngine;
 public class MinimapFollow : MonoBehaviour
 {
     public Transform target;
-    public Vector3 offset = new Vector3(0f, 44f, 0f);
+    public Vector3 offset = new Vector3(0f, 28f, 0f);
 
     void LateUpdate()
     {
