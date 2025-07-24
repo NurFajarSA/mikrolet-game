@@ -49,6 +49,16 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("kocak");
+        if (GameManager.Instance != null && !GameManager.Instance.IsGameStarted())
+        {
+            Debug.Log("Game belum mulai, input dan audio dimatikan.");
+
+            idleSound.volume = 0f;
+            forwardSound.volume = 0f;
+            reverseSound.volume = 0f;
+            return;
+        }
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
@@ -135,7 +145,7 @@ public class CarMovement : MonoBehaviour
             if (currentPassengers.Count >= maxPassengers)
             {
                 Debug.Log("Angkot is full! Cannot add more passengers. Ignoring collision.");
-                
+
                 Collider col = other.GetComponent<Collider>();
                 if (col != null)
                 {
@@ -218,22 +228,22 @@ public class CarMovement : MonoBehaviour
             Debug.Log("Passenger dropped off successfully!");
         }
     }
-    
+
     public int GetCurrentPassengerCount()
     {
         return currentPassengers.Count;
     }
-    
+
     public bool IsAngkotFull()
     {
         return currentPassengers.Count >= maxPassengers;
     }
-    
+
     public bool HasPassengers()
     {
         return currentPassengers.Count > 0;
     }
-    
+
     public List<int> GetCurrentPassengerIDs()
     {
         return new List<int>(currentPassengers);
