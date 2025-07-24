@@ -24099,7 +24099,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &711695989
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24139,7 +24139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 03:00
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -43916,9 +43916,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9a8673c4330408da6f625ba689ecb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownText: {fileID: 802448242}
   carMovement: {fileID: 11610481}
   countdownDuration: 1
+  countdownText: {fileID: 802448242}
+  gameCounterText: {fileID: 711695990}
   audioSource: {fileID: 1209616950}
   startMusic: {fileID: 8300000, guid: afcfb8413bd96495681b4a991d4c5f75, type: 3}
   backgroundMusic: {fileID: 8300000, guid: febb358f2bb9d4f93875df97b429341c, type: 3}
