@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Object")]
     public CarMovement carMovement;
-    public float countdownDuration = 1f;
+    public GameObject finishScreen;
+
 
     [Header("UI & Control")]
     public TMP_Text countdownText;
     public TMP_Text gameCounterText;
+    private float countdownDuration = 1f;
     private float gameTimeRemaining = 10f;
     private bool isGameTimerRunning = false;
 
@@ -58,6 +60,12 @@ public class GameManager : MonoBehaviour
                 // TODO: Panggil GameOver atau logic selesai game
                 carMovement.enabled = false;
                 MuteAllEngineSounds();
+
+                if (finishScreen != null)
+                {
+                    finishScreen.SetActive(true);
+                }
+                Time.timeScale = 0f;
             }
             else
             {
