@@ -39,6 +39,9 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private DestinationSpawner destinationSpawner;
     private List<int> currentPassengers = new List<int>();
     private List<Vector3> currentDestinations = new List<Vector3>();
+    private List<Material> currentPassengerMaterials = new List<Material>();
+    private List<Passenger.PassengerType> currentPassengerTypes = new List<Passenger.PassengerType>();
+    
     private const int maxPassengers = 4;
 
     void Awake()
@@ -163,28 +166,28 @@ public class CarMovement : MonoBehaviour
                 return;
             }
 
-            Debug.Log("Triggered with: " + other.gameObject.name + " | ID: " + passengerScript.passengerID + " | Destination: " + passengerScript.destination);
+            Debug.Log($"Passenger {passengerScript.passengerID} ({passengerScript.GetPassengerTypeString()}) picked up!");
 
             currentPassengers.Add(passengerScript.passengerID);
             currentDestinations.Add(passengerScript.destination);
+            currentPassengerMaterials.Add(passengerScript.passengerMaterial);
+            currentPassengerTypes.Add(passengerScript.passengerType);
 
             if (PassengerUIManager.Instance != null)
             {
-                PassengerUIManager.Instance.AddPassenger(passengerScript.passengerID);
+                PassengerUIManager.Instance.AddPassenger(passengerScript.passengerID, passengerScript.passengerMaterial);
             }
 
             other.gameObject.SetActive(false);
 
             if (destinationSpawner != null)
             {
-                destinationSpawner.SpawnDestination(passengerScript.destination);
+                destinationSpawner.SpawnDestination(passengerScript.destination, passengerScript.passengerID, passengerScript.passengerMaterial);
             }
             else
             {
                 Debug.LogError("DestinationSpawner reference is missing!");
             }
-
-            Debug.Log($"Passenger {passengerScript.passengerID} picked up! Total passengers: {currentPassengers.Count}/{maxPassengers}");
 
             if (currentPassengers.Count >= maxPassengers)
             {
@@ -199,16 +202,44 @@ public class CarMovement : MonoBehaviour
         {
             if (currentPassengers.Count > 0)
             {
-                int droppedPassengerID = currentPassengers[0];
-                currentPassengers.RemoveAt(0);
-                currentDestinations.RemoveAt(0);
+                Destination destinationScript = other.gameObject.GetComponent<Destination>();
+                
+                if (destinationScript == null)
+                {
+                    Debug.LogError("Destination script not found on collided object!");
+                    return;
+                }
+                
+                int passengerIndex = -1;
+                for (int i = 0; i < currentPassengers.Count; i++)
+                {
+                    if (destinationScript.CanDropPassenger(currentPassengers[i]))
+                    {
+                        passengerIndex = i;
+                        break;
+                    }
+                }
+                
+                if (passengerIndex == -1)
+                {
+                    Debug.Log($"No matching passenger for destination {destinationScript.destinationID}");
+                    return;
+                }
+                
+                int droppedPassengerID = currentPassengers[passengerIndex];
+                Material droppedPassengerMaterial = currentPassengerMaterials[passengerIndex];
+                
+                currentPassengers.RemoveAt(passengerIndex);
+                currentDestinations.RemoveAt(passengerIndex);
+                currentPassengerMaterials.RemoveAt(passengerIndex);
+                currentPassengerTypes.RemoveAt(passengerIndex);
 
                 if (PassengerUIManager.Instance != null)
                 {
-                    PassengerUIManager.Instance.RemovePassenger();
+                    PassengerUIManager.Instance.RemovePassengerByMaterial(droppedPassengerMaterial);
                 }
 
-                Debug.Log($"Passenger {droppedPassengerID} dropped off! Total passengers: {currentPassengers.Count}/{maxPassengers}");
+                Debug.Log($"Passenger {droppedPassengerID} dropped off! Remaining: {currentPassengers.Count}/{maxPassengers}");
 
                 if (currentPassengers.Count < maxPassengers)
                 {
@@ -223,8 +254,6 @@ public class CarMovement : MonoBehaviour
             }
 
             Destroy(other.gameObject);
-
-            Debug.Log("Passenger dropped off successfully!");
         }
     }
 
@@ -246,6 +275,16 @@ public class CarMovement : MonoBehaviour
     public List<int> GetCurrentPassengerIDs()
     {
         return new List<int>(currentPassengers);
+    }
+    
+    public List<Material> GetCurrentPassengerMaterials()
+    {
+        return new List<Material>(currentPassengerMaterials);
+    }
+    
+    public List<Passenger.PassengerType> GetCurrentPassengerTypes()
+    {
+        return new List<Passenger.PassengerType>(currentPassengerTypes);
     }
 
     public void MuteAllEngineSounds()

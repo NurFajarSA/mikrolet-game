@@ -12,6 +12,8 @@ public class PassengerUIManager : MonoBehaviour
     public Color occupiedSlotColor = Color.green;
     
     public static PassengerUIManager Instance;
+
+    private Material[] slotMaterials = new Material[4];
     
     void Awake()
     {
@@ -34,18 +36,29 @@ public class PassengerUIManager : MonoBehaviour
             if (passengerSlots[i] != null)
             {
                 passengerSlots[i].color = emptySlotColor;
+                slotMaterials[i] = null;
             }
         }
     }
     
-    public bool AddPassenger(int passengerID)
+    public bool AddPassenger(int passengerID, Material passengerMaterial = null)
     {
         for (int i = 0; i < passengerSlots.Length; i++)
         {
             if (passengerSlots[i] != null && passengerSlots[i].color == emptySlotColor)
             {
-                passengerSlots[i].color = occupiedSlotColor;
-                Debug.Log($"Passenger {passengerID} added to slot {i}");
+                if (passengerMaterial != null)
+                {
+                    passengerSlots[i].color = passengerMaterial.color;
+                    slotMaterials[i] = passengerMaterial;
+                }
+                else
+                {
+                    passengerSlots[i].color = occupiedSlotColor;
+                    slotMaterials[i] = null;
+                }
+                
+                Debug.Log($"Passenger {passengerID} added to UI slot {i}");
                 return true;
             }
         }
@@ -54,14 +67,39 @@ public class PassengerUIManager : MonoBehaviour
         return false;
     }
     
+    public void RemovePassengerByMaterial(Material targetMaterial)
+    {
+        if (targetMaterial == null)
+        {
+            RemovePassenger();
+            return;
+        }
+        
+        for (int i = 0; i < passengerSlots.Length; i++)
+        {
+            if (passengerSlots[i] != null && slotMaterials[i] != null && 
+                slotMaterials[i].color == targetMaterial.color)
+            {
+                passengerSlots[i].color = emptySlotColor;
+                slotMaterials[i] = null;
+                Debug.Log($"Passenger removed from UI slot {i} by material match");
+                return;
+            }
+        }
+        
+        Debug.LogWarning("No material match found, using fallback removal");
+        RemovePassenger();
+    }
+    
     public void RemovePassenger()
     {
         for (int i = passengerSlots.Length - 1; i >= 0; i--)
         {
-            if (passengerSlots[i] != null && passengerSlots[i].color == occupiedSlotColor)
+            if (passengerSlots[i] != null && passengerSlots[i].color != emptySlotColor)
             {
                 passengerSlots[i].color = emptySlotColor;
-                Debug.Log($"Passenger removed from slot {i}");
+                slotMaterials[i] = null;
+                Debug.Log($"Passenger removed from UI slot {i}");
                 return;
             }
         }
@@ -72,7 +110,7 @@ public class PassengerUIManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < passengerSlots.Length; i++)
         {
-            if (passengerSlots[i] != null && passengerSlots[i].color == occupiedSlotColor)
+            if (passengerSlots[i] != null && passengerSlots[i].color != emptySlotColor)
             {
                 count++;
             }

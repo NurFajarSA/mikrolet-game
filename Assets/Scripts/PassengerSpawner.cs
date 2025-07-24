@@ -3,6 +3,9 @@ using UnityEngine;
 public class PassengerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject passengerPrefab;
+    
+    [Header("Passenger Materials")]
+    [SerializeField] private Material[] passengerMaterials;
 
     private int passengerCounter = 0;
 
@@ -70,6 +73,11 @@ public class PassengerSpawner : MonoBehaviour
 
     void Start()
     {
+       if (passengerMaterials == null || passengerMaterials.Length == 0)
+        {
+            Debug.LogWarning("PassengerSpawner: No passenger materials assigned! Using default materials.");
+        }
+        
         // SpawnPassenger();
         SpawnMultiplePassengers(20);
     }
@@ -83,6 +91,8 @@ public class PassengerSpawner : MonoBehaviour
         Passenger passengerScript = newPassenger.GetComponent<Passenger>();
 
         passengerScript.Initialize(passengerCounter, destinationPoints[randDestIndex]);
+        
+        SetRandomMaterialForPassenger(passengerScript);
         passengerCounter++;
     }
 
@@ -102,12 +112,23 @@ public class PassengerSpawner : MonoBehaviour
             int spawnIndex = availableIndexes[randListIndex];
             availableIndexes.RemoveAt(randListIndex);
 
-            int randDestIndex = Random.Range(0, destinationPoints.Length);
+            int destIndex = spawnIndex < destinationPoints.Length ? spawnIndex : Random.Range(0, destinationPoints.Length);
 
             GameObject newPassenger = Instantiate(passengerPrefab, spawnPoints[spawnIndex], Quaternion.identity);
             Passenger passengerScript = newPassenger.GetComponent<Passenger>();
-            passengerScript.Initialize(passengerCounter, destinationPoints[randDestIndex]);
+            passengerScript.Initialize(passengerCounter, destinationPoints[destIndex]);
+            
+            SetRandomMaterialForPassenger(passengerScript);
             passengerCounter++;
+        }
+    }
+    
+    private void SetRandomMaterialForPassenger(Passenger passenger)
+    {
+        if (passengerMaterials != null && passengerMaterials.Length > 0)
+        {
+            Material randomMaterial = passengerMaterials[Random.Range(0, passengerMaterials.Length)];
+            passenger.SetPassengerMaterial(randomMaterial);
         }
     }
 }

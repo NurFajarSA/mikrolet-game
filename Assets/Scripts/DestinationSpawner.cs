@@ -7,7 +7,18 @@ public class DestinationSpawner : MonoBehaviour
 
     void Start()
     {
-        // Initialize if needed
+        if (destinationPrefab == null)
+        {
+            Debug.LogError("DestinationSpawner: destinationPrefab is not assigned!");
+        }
+        else
+        {
+            Renderer[] prefabRenderers = destinationPrefab.GetComponentsInChildren<Renderer>();
+            if (prefabRenderers.Length == 0)
+            {
+                Debug.LogError("DestinationSpawner: destinationPrefab does not have Renderer components in children!");
+            }
+        }
     }
 
     void Update()
@@ -15,28 +26,38 @@ public class DestinationSpawner : MonoBehaviour
         // Update logic if needed
     }
 
-    // Changed to public (non-static) method
-    public void SpawnDestination(Vector3 destinationPoint)
+    public void SpawnDestination(Vector3 destinationPoint, int passengerID, Material passengerMaterial)
     {
         GameObject newDestination = Instantiate(destinationPrefab, destinationPoint, Quaternion.identity);
         Destination destinationScript = newDestination.GetComponent<Destination>();
 
-        destinationScript.Initialize(destinationCounter, destinationPoint);
+        destinationScript.Initialize(passengerID, destinationPoint);
+        
+        if (passengerMaterial != null)
+        {
+            destinationScript.SetDestinationMaterial(passengerMaterial);
+        }
+        
         destinationCounter++;
         
-        Debug.Log($"Destination {destinationCounter} spawned at {destinationPoint}");
+        Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
     }
-    
+
     // Optional: Method to spawn destination at specific position with custom settings
-    public GameObject SpawnDestinationWithReturn(Vector3 destinationPoint)
+    public GameObject SpawnDestinationWithReturn(Vector3 destinationPoint, int passengerID, Material passengerMaterial)
     {
         GameObject newDestination = Instantiate(destinationPrefab, destinationPoint, Quaternion.identity);
         Destination destinationScript = newDestination.GetComponent<Destination>();
 
-        destinationScript.Initialize(destinationCounter, destinationPoint);
-        destinationCounter++;
+        destinationScript.Initialize(passengerID, destinationPoint);
         
-        Debug.Log($"Destination {destinationCounter} spawned at {destinationPoint}");
+        if (passengerMaterial != null)
+        {
+            destinationScript.SetDestinationMaterial(passengerMaterial);
+        }
+        
+        destinationCounter++;
+        Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
         
         return newDestination;
     }
