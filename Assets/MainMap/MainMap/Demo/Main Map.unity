@@ -851,7 +851,7 @@ MonoBehaviour:
   acceleration: 50
   braking: 80
   coastingDrag: 10
-  turnSpeed: 20
+  turnSpeed: 10
   wheelFL: {fileID: 972148217}
   wheelFR: {fileID: 1554966110}
   idleSound: {fileID: 1616620352}
