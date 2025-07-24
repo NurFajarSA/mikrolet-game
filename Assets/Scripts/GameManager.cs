@@ -6,10 +6,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("UI & Control")]
-    public TMP_Text countdownText;
+    [Header("Game Object")]
     public CarMovement carMovement;
     public float countdownDuration = 1f;
+
+    [Header("UI & Control")]
+    public TMP_Text countdownText;
+    public TMP_Text gameCounterText;
+    private float gameTimeRemaining = 181f;
+    private bool isGameTimerRunning = false;
+
 
     private bool gameStarted = false;
 
@@ -37,6 +43,29 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartCountdown());
     }
 
+    void Update()
+    {
+        if (isGameTimerRunning)
+        {
+            gameTimeRemaining -= Time.deltaTime;
+
+            if (gameTimeRemaining <= 0f)
+            {
+                gameTimeRemaining = 0f;
+                isGameTimerRunning = false;
+                gameCounterText.text = "00:00";
+
+                // TODO: Panggil GameOver atau logic selesai game
+            }
+            else
+            {
+                int minutes = Mathf.FloorToInt(gameTimeRemaining / 60f);
+                int seconds = Mathf.FloorToInt(gameTimeRemaining % 60f);
+                gameCounterText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
+        }
+    }
+
     IEnumerator StartCountdown()
     {
         if (audioSource != null && startMusic != null)
@@ -58,6 +87,9 @@ public class GameManager : MonoBehaviour
         countdownText.text = "GO!";
         yield return new WaitForSeconds(0.5f);
         countdownText.gameObject.SetActive(false);
+
+        isGameTimerRunning = true;
+        gameCounterText.gameObject.SetActive(true);
 
         if (audioSource != null && backgroundMusic != null)
         {
