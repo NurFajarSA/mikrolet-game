@@ -1,43 +1,58 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro; // Jika pakai TextMeshPro
+using TMPro;
 
-public class RaceManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public CarMovement car;
-    public GameObject uiBlockInput; // optional: buat matikan input tombol
-    public TextMeshProUGUI countdownText; // gunakan Text jika bukan TMP
-    public float countdownTime = 3f;
+    public static GameManager Instance;
+
+    public TMP_Text countdownText;
+    public CarMovement carMovement;
+    public float countdownDuration = 1f;
+
+    private bool gameStarted = false;
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        Time.timeScale = 1f;
+    }
 
     void Start()
     {
+        if (carMovement != null)
+        {
+            carMovement.enabled = false;
+        }
+
         StartCoroutine(StartCountdown());
     }
 
     IEnumerator StartCountdown()
     {
-        // Nonaktifkan kontrol mobil
-        car.enabled = false;
+        countdownText.gameObject.SetActive(true);
 
-        if (uiBlockInput != null) uiBlockInput.SetActive(true);
-
-        float timeLeft = countdownTime;
-
-        while (timeLeft > 0)
+        for (int i = 3; i > 0; i--)
         {
-            countdownText.text = Mathf.Ceil(timeLeft).ToString();
-            yield return new WaitForSeconds(1f);
-            timeLeft--;
+            countdownText.text = i.ToString();
+            yield return new WaitForSeconds(countdownDuration);
         }
 
         countdownText.text = "GO!";
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         countdownText.gameObject.SetActive(false);
 
-        // Aktifkan kontrol mobil
-        car.enabled = true;
+        gameStarted = true;
+        if (carMovement != null)
+        {
+            carMovement.enabled = true;
+        }
+    }
 
-        if (uiBlockInput != null) uiBlockInput.SetActive(false);
+    public bool IsGameStarted()
+    {
+        return gameStarted;
     }
 }
