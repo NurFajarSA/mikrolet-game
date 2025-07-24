@@ -5691,6 +5691,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passengerPrefab: {fileID: 887307621665759171, guid: 78e7e67bc636542cd98088f4b7997e16, type: 3}
+  passengerMaterials:
+  - {fileID: 2100000, guid: 195735171a02c4288b68ca1063665352, type: 2}
+  - {fileID: 2100000, guid: 23e964d7d4e43421d8473ae75af32ab2, type: 2}
+  - {fileID: 2100000, guid: 6d7073470683647298b4173ca69a3e74, type: 2}
+  - {fileID: 2100000, guid: 50168cb3686ca4e00a07e70558f8cc35, type: 2}
 --- !u!4 &157857079
 Transform:
   m_ObjectHideFlags: 0
