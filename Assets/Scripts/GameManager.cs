@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 3; i > 0; i--)
         {
+            MuteAllEngineSounds();
             countdownText.text = i.ToString();
             yield return new WaitForSeconds(countdownDuration);
         }
@@ -54,5 +55,13 @@ public class GameManager : MonoBehaviour
     public bool IsGameStarted()
     {
         return gameStarted;
+    }
+
+    public void MuteAllEngineSounds()
+    {
+        if (carMovement != null)
+        {
+            carMovement.MuteAllEngineSounds();
+        }
     }
 }

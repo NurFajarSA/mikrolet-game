@@ -49,7 +49,6 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("kocak");
         if (GameManager.Instance != null && !GameManager.Instance.IsGameStarted())
         {
             Debug.Log("Game belum mulai, input dan audio dimatikan.");
@@ -247,5 +246,12 @@ public class CarMovement : MonoBehaviour
     public List<int> GetCurrentPassengerIDs()
     {
         return new List<int>(currentPassengers);
+    }
+
+    public void MuteAllEngineSounds()
+    {
+        idleSound.volume = 0f;
+        forwardSound.volume = 0f;
+        reverseSound.volume = 0f;
     }
 }
