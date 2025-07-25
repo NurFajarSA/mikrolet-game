@@ -3,7 +3,6 @@ using UnityEngine;
 public class PassengerCollisionManager : MonoBehaviour
 {
     public static PassengerCollisionManager Instance;
-
     private Passenger[] allPassengers;
 
     void Awake()

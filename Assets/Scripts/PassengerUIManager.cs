@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class PassengerUIManager : MonoBehaviour
 {
@@ -63,18 +62,11 @@ public class PassengerUIManager : MonoBehaviour
             }
         }
         
-        Debug.Log("All passenger slots are full!");
         return false;
     }
     
     public void RemovePassengerByMaterial(Material targetMaterial)
     {
-        if (targetMaterial == null)
-        {
-            RemovePassenger();
-            return;
-        }
-        
         for (int i = 0; i < passengerSlots.Length; i++)
         {
             if (passengerSlots[i] != null && slotMaterials[i] != null && 
@@ -87,7 +79,6 @@ public class PassengerUIManager : MonoBehaviour
             }
         }
         
-        Debug.LogWarning("No material match found, using fallback removal");
         RemovePassenger();
     }
     
@@ -116,15 +107,5 @@ public class PassengerUIManager : MonoBehaviour
             }
         }
         return count;
-    }
-    
-    public bool IsFull()
-    {
-        return GetPassengerCount() >= 4;
-    }
-    
-    public bool IsEmpty()
-    {
-        return GetPassengerCount() == 0;
     }
 }

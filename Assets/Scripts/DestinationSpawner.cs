@@ -12,28 +12,7 @@ public class DestinationSpawner : MonoBehaviour
 
     void Start()
     {
-        if (destinationPrefab == null)
-        {
-            Debug.LogError("DestinationSpawner: destinationPrefab is not assigned!");
-        }
-        else
-        {
-            Renderer[] prefabRenderers = destinationPrefab.GetComponentsInChildren<Renderer>();
-            if (prefabRenderers.Length == 0)
-            {
-                Debug.LogError("DestinationSpawner: destinationPrefab does not have Renderer components in children!");
-            }
-        }
-
-        if (destinationIndicatorPrefab == null)
-        {
-            Debug.LogError("DestinationSpawner: Destination indicator prefab is not assigned!");
-        }
-
-        if (carTransform == null)
-        {
-            Debug.LogError("DestinationSpawner: Car transform is not assigned!");
-        }
+        // Initialize the spawner if needed
     }
 
     void Update()
@@ -62,12 +41,6 @@ public class DestinationSpawner : MonoBehaviour
             {
                 indicatorScript.Initialize(newDestination.transform, carTransform);
                 indicatorScript.SetIndicatorMaterial(passengerMaterial);
-                Debug.Log("Destination indicator spawned for destination at " + destinationPoint);
-            }
-            else
-            {
-                Debug.LogError("DestinationIndicator component not found on indicator prefab!");
-                Destroy(indicatorObj);
             }
         }
 

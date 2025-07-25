@@ -78,26 +78,6 @@ public class PassengerSpawner : MonoBehaviour
 
     void Start()
     {
-        if (whiteMaterial == null)
-        {
-            Debug.LogError("PassengerSpawner: White material is not assigned!");
-        }
-
-        if (colorMaterials == null || colorMaterials.Length == 0)
-        {
-            Debug.LogWarning("PassengerSpawner: No color materials assigned!");
-        }
-
-        if (passengerIndicatorPrefab == null)
-        {
-            Debug.LogError("PassengerSpawner: Passenger indicator prefab is not assigned!");
-        }
-
-        if (carTransform == null)
-        {
-            Debug.LogError("PassengerSpawner: Car transform is not assigned!");
-        }
-
         // SpawnPassenger();
         SpawnMultiplePassengers(20);
     }
@@ -115,13 +95,12 @@ public class PassengerSpawner : MonoBehaviour
         SetMaterialsForPassenger(passengerScript);
         SpawnPassengerIndicator(newPassenger.transform);
 
+        Debug.Log("Spawning " + passengerCounter + " passengers");
         passengerCounter++;
     }
 
     void SpawnMultiplePassengers(int count)
     {
-        Debug.Log("Spawning " + count + " passengers");
-
         System.Collections.Generic.List<int> availableIndexes = new System.Collections.Generic.List<int>();
         for (int i = 0; i < spawnPoints.Length; i++)
         {

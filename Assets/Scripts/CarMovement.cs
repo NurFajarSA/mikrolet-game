@@ -168,16 +168,9 @@ public class CarMovement : MonoBehaviour
 
             Passenger passengerScript = other.gameObject.GetComponent<Passenger>();
 
-            if (passengerScript == null)
-            {
-                Debug.LogError("Passenger script not found on collided object!");
-                return;
-            }
-
             if (!IsAngkotFull())
             {
                 passengerScript.ActivatePassengerColor();
-                Debug.Log($"Passenger {passengerScript.passengerID} color activated because angkot is not full");
             }
 
             Debug.Log($"Passenger {passengerScript.passengerID} ({passengerScript.GetPassengerTypeString()}) picked up!");
@@ -230,12 +223,6 @@ public class CarMovement : MonoBehaviour
             if (currentPassengers.Count > 0)
             {
                 Destination destinationScript = other.gameObject.GetComponent<Destination>();
-
-                if (destinationScript == null)
-                {
-                    Debug.LogError("Destination script not found on collided object!");
-                    return;
-                }
 
                 int passengerIndex = -1;
                 for (int i = 0; i < currentPassengers.Count; i++)
@@ -306,34 +293,9 @@ public class CarMovement : MonoBehaviour
         moneyText.color = Color.white;
     }
 
-    public int GetCurrentPassengerCount()
-    {
-        return currentPassengers.Count;
-    }
-
     public bool IsAngkotFull()
     {
         return currentPassengers.Count >= maxPassengers;
-    }
-
-    public bool HasPassengers()
-    {
-        return currentPassengers.Count > 0;
-    }
-
-    public List<int> GetCurrentPassengerIDs()
-    {
-        return new List<int>(currentPassengers);
-    }
-    
-    public List<Material> GetCurrentPassengerMaterials()
-    {
-        return new List<Material>(currentPassengerMaterials);
-    }
-    
-    public List<Passenger.PassengerType> GetCurrentPassengerTypes()
-    {
-        return new List<Passenger.PassengerType>(currentPassengerTypes);
     }
 
     public void MuteAllEngineSounds()

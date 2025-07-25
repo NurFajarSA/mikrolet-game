@@ -18,7 +18,7 @@ public class Passenger : MonoBehaviour
         TukangJamu,
         IbuHamil,
         Pengamen,
-        Pesilat
+        Pesilat,
     }
     
     public void Initialize(int id, Vector3 dest)
@@ -57,10 +57,6 @@ public class Passenger : MonoBehaviour
                 childRenderer.material = materialInstance;
             }
         }
-        else
-        {
-            Debug.LogWarning($"Passenger {passengerID}: No Renderer components found in children!");
-        }
     }
 
     public void ActivatePassengerColor()
@@ -71,13 +67,6 @@ public class Passenger : MonoBehaviour
         Material randomColorMaterial = availableColorMaterials[Random.Range(0, availableColorMaterials.Length)];
         SetPassengerMaterial(randomColorMaterial);
         isColorActivated = true;
-        
-        Debug.Log($"Passenger {passengerID} color activated to {randomColorMaterial.name}");
-    }
-
-    public bool IsColorActivated()
-    {
-        return isColorActivated;
     }
     
     public string GetPassengerTypeString()
