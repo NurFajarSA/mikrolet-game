@@ -7,8 +7,6 @@ public class CarIndicator : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null) return;
-
         transform.position = target.position + offset;
         transform.rotation = Quaternion.Euler(0f, target.eulerAngles.y, 0f);
     }

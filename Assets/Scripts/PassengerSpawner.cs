@@ -128,33 +128,14 @@ public class PassengerSpawner : MonoBehaviour
 
     private void SetMaterialsForPassenger(Passenger passenger)
     {
-        if (whiteMaterial != null && colorMaterials != null && colorMaterials.Length > 0)
-        {
-            passenger.SetAvailableColorMaterials(whiteMaterial, colorMaterials);
-        }
-        else
-        {
-            Debug.LogError("PassengerSpawner: Missing material references for passenger " + passenger.passengerID);
-        }
+        passenger.SetAvailableColorMaterials(whiteMaterial, colorMaterials);
     }
     
     private void SpawnPassengerIndicator(Transform passengerTransform)
     {
-        if (passengerIndicatorPrefab != null && carTransform != null)
-        {
-            GameObject indicator = Instantiate(passengerIndicatorPrefab);
-            PassengerIndicator indicatorScript = indicator.GetComponent<PassengerIndicator>();
-            
-            if (indicatorScript != null)
-            {
-                indicatorScript.Initialize(passengerTransform, carTransform);
-                Debug.Log("Passenger indicator spawned for passenger at " + passengerTransform.position);
-            }
-            else
-            {
-                Debug.LogError("PassengerIndicator component not found on indicator prefab!");
-                Destroy(indicator);
-            }
-        }
+        GameObject indicator = Instantiate(passengerIndicatorPrefab);
+        PassengerIndicator indicatorScript = indicator.GetComponent<PassengerIndicator>();
+        
+        indicatorScript.Initialize(passengerTransform, carTransform);
     }
 }

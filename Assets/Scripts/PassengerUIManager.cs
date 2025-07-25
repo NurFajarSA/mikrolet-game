@@ -16,15 +16,6 @@ public class PassengerUIManager : MonoBehaviour
     
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
         InitializeSlots();
     }
     
@@ -94,18 +85,5 @@ public class PassengerUIManager : MonoBehaviour
                 return;
             }
         }
-    }
-    
-    public int GetPassengerCount()
-    {
-        int count = 0;
-        for (int i = 0; i < passengerSlots.Length; i++)
-        {
-            if (passengerSlots[i] != null && passengerSlots[i].color != emptySlotColor)
-            {
-                count++;
-            }
-        }
-        return count;
     }
 }

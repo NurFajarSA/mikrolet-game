@@ -61,9 +61,6 @@ public class Passenger : MonoBehaviour
 
     public void ActivatePassengerColor()
     {
-        if (isColorActivated || availableColorMaterials == null || availableColorMaterials.Length == 0)
-            return;
-            
         Material randomColorMaterial = availableColorMaterials[Random.Range(0, availableColorMaterials.Length)];
         SetPassengerMaterial(randomColorMaterial);
         isColorActivated = true;

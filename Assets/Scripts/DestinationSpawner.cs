@@ -22,27 +22,19 @@ public class DestinationSpawner : MonoBehaviour
 
     public void SpawnDestination(Vector3 destinationPoint, int passengerID, Material passengerMaterial)
     {
+        // Create the destination
         GameObject newDestination = Instantiate(destinationPrefab, destinationPoint, Quaternion.identity);
         Destination destinationScript = newDestination.GetComponent<Destination>();
 
         destinationScript.Initialize(passengerID, destinationPoint);
+        destinationScript.SetDestinationMaterial(passengerMaterial);
 
-        if (passengerMaterial != null)
-        {
-            destinationScript.SetDestinationMaterial(passengerMaterial);
-        }
-
-        if (destinationIndicatorPrefab != null && carTransform != null)
-        {
-            GameObject indicatorObj = Instantiate(destinationIndicatorPrefab);
-            DestinationIndicator indicatorScript = indicatorObj.GetComponent<DestinationIndicator>();
-
-            if (indicatorScript != null)
-            {
-                indicatorScript.Initialize(newDestination.transform, carTransform);
-                indicatorScript.SetIndicatorMaterial(passengerMaterial);
-            }
-        }
+        // Create the destination indicator
+        GameObject indicatorObj = Instantiate(destinationIndicatorPrefab);
+        DestinationIndicator indicatorScript = indicatorObj.GetComponent<DestinationIndicator>();
+        
+        indicatorScript.Initialize(newDestination.transform, carTransform);
+        indicatorScript.SetIndicatorMaterial(passengerMaterial);
 
         destinationCounter++;
         Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");

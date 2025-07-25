@@ -7,7 +7,6 @@ public class MinimapFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null) return;
         transform.position = target.position + offset;
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }

@@ -49,6 +49,5 @@ public class PassengerCollisionManager : MonoBehaviour
             if (passenger != null && passenger.GetComponent<Collider>().enabled)
                 enabledCount++;
         }
-        Debug.Log("Enabled passenger colliders: " + enabledCount);
     }
 }

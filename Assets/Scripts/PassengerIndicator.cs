@@ -16,12 +16,6 @@ public class PassengerIndicator : MonoBehaviour
 
     void LateUpdate()
     {
-        if (targetPassenger == null || carTransform == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         UpdateIndicatorPosition();
     }
 

@@ -58,9 +58,6 @@ public class DestinationIndicator : MonoBehaviour
     
     public void SetIndicatorMaterial(Material mat)
     {
-        if (indicatorRenderer != null && mat != null)
-        {
-            indicatorRenderer.material = mat;
-        }
+        indicatorRenderer.material = mat;
     }
 }
