@@ -171,7 +171,7 @@ public class CarMovement : MonoBehaviour
                 passengerScript.ActivatePassengerColor();
                 Debug.Log($"Passenger {passengerScript.passengerID} color activated because angkot is not full");
             }
-            
+
             Debug.Log($"Passenger {passengerScript.passengerID} ({passengerScript.GetPassengerTypeString()}) picked up!");
 
             currentPassengers.Add(passengerScript.passengerID);
@@ -203,19 +203,32 @@ public class CarMovement : MonoBehaviour
                     Debug.Log("Angkot is full! Passenger collisions disabled.");
                 }
             }
+            
+            PassengerIndicator[] indicators = Object.FindObjectsByType<PassengerIndicator>(FindObjectsSortMode.None);
+            foreach (var indicator in indicators)
+            {
+                if (indicator != null && indicator.gameObject.activeSelf && indicator.transform != null)
+                {
+                    if (indicator.transform == other.transform || 
+                        (indicator.GetType().GetField("targetPassenger", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(indicator) as Transform) == other.transform)
+                    {
+                        Destroy(indicator.gameObject);
+                    }
+                }
+            }
         }
         else if (other.gameObject.CompareTag("Destination"))
         {
             if (currentPassengers.Count > 0)
             {
                 Destination destinationScript = other.gameObject.GetComponent<Destination>();
-                
+
                 if (destinationScript == null)
                 {
                     Debug.LogError("Destination script not found on collided object!");
                     return;
                 }
-                
+
                 int passengerIndex = -1;
                 for (int i = 0; i < currentPassengers.Count; i++)
                 {
@@ -225,16 +238,16 @@ public class CarMovement : MonoBehaviour
                         break;
                     }
                 }
-                
+
                 if (passengerIndex == -1)
                 {
                     Debug.Log($"No matching passenger for destination {destinationScript.destinationID}");
                     return;
                 }
-                
+
                 int droppedPassengerID = currentPassengers[passengerIndex];
                 Material droppedPassengerMaterial = currentPassengerMaterials[passengerIndex];
-                
+
                 currentPassengers.RemoveAt(passengerIndex);
                 currentDestinations.RemoveAt(passengerIndex);
                 currentPassengerMaterials.RemoveAt(passengerIndex);

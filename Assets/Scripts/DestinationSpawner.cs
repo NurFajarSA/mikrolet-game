@@ -3,6 +3,11 @@ using UnityEngine;
 public class DestinationSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject destinationPrefab;
+
+    [Header("Indicator Settings")]
+    [SerializeField] private GameObject destinationIndicatorPrefab;
+    [SerializeField] private Transform carTransform;
+
     private int destinationCounter = 0;
 
     void Start()
@@ -19,6 +24,16 @@ public class DestinationSpawner : MonoBehaviour
                 Debug.LogError("DestinationSpawner: destinationPrefab does not have Renderer components in children!");
             }
         }
+
+        if (destinationIndicatorPrefab == null)
+        {
+            Debug.LogError("DestinationSpawner: Destination indicator prefab is not assigned!");
+        }
+
+        if (carTransform == null)
+        {
+            Debug.LogError("DestinationSpawner: Car transform is not assigned!");
+        }
     }
 
     void Update()
@@ -32,14 +47,31 @@ public class DestinationSpawner : MonoBehaviour
         Destination destinationScript = newDestination.GetComponent<Destination>();
 
         destinationScript.Initialize(passengerID, destinationPoint);
-        
+
         if (passengerMaterial != null)
         {
             destinationScript.SetDestinationMaterial(passengerMaterial);
         }
-        
+
+        if (destinationIndicatorPrefab != null && carTransform != null)
+        {
+            GameObject indicatorObj = Instantiate(destinationIndicatorPrefab);
+            DestinationIndicator indicatorScript = indicatorObj.GetComponent<DestinationIndicator>();
+
+            if (indicatorScript != null)
+            {
+                indicatorScript.Initialize(newDestination.transform, carTransform);
+                indicatorScript.SetIndicatorMaterial(passengerMaterial);
+                Debug.Log("Destination indicator spawned for destination at " + destinationPoint);
+            }
+            else
+            {
+                Debug.LogError("DestinationIndicator component not found on indicator prefab!");
+                Destroy(indicatorObj);
+            }
+        }
+
         destinationCounter++;
-        
         Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
     }
 
@@ -50,15 +82,36 @@ public class DestinationSpawner : MonoBehaviour
         Destination destinationScript = newDestination.GetComponent<Destination>();
 
         destinationScript.Initialize(passengerID, destinationPoint);
-        
+
         if (passengerMaterial != null)
         {
             destinationScript.SetDestinationMaterial(passengerMaterial);
         }
-        
+
+        SpawnDestinationIndicator(newDestination.transform);
         destinationCounter++;
-        Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
         
+        Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
         return newDestination;
+    }
+
+    private void SpawnDestinationIndicator(Transform destinationTransform)
+    {
+        if (destinationIndicatorPrefab != null && carTransform != null)
+        {
+            GameObject indicator = Instantiate(destinationIndicatorPrefab);
+            DestinationIndicator indicatorScript = indicator.GetComponent<DestinationIndicator>();
+
+            if (indicatorScript != null)
+            {
+                indicatorScript.Initialize(destinationTransform, carTransform);
+                Debug.Log("Destination indicator spawned for destination at " + destinationTransform.position);
+            }
+            else
+            {
+                Debug.LogError("DestinationIndicator component not found on indicator prefab!");
+                Destroy(indicator);
+            }
+        }
     }
 }
