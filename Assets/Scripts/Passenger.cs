@@ -9,6 +9,10 @@ public class Passenger : MonoBehaviour
     public Material passengerMaterial { get; private set; }
     public Vector3 destination { get; private set; }
 
+    private bool isColorActivated = false;
+    private Material defaultWhiteMaterial;
+    private Material[] availableColorMaterials;
+
     public enum PassengerType
     {
         TukangJamu,
@@ -32,10 +36,18 @@ public class Passenger : MonoBehaviour
         passengerType = types[Random.Range(0, types.Length)];
     }
     
+    public void SetAvailableColorMaterials(Material whiteMaterial, Material[] colorMaterials)
+    {
+        defaultWhiteMaterial = whiteMaterial;
+        availableColorMaterials = colorMaterials;
+
+        SetPassengerMaterial(defaultWhiteMaterial);
+    }
+    
     public void SetPassengerMaterial(Material material)
     {
         passengerMaterial = material;
-        
+
         Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
         if (childRenderers.Length > 0)
         {
@@ -49,6 +61,23 @@ public class Passenger : MonoBehaviour
         {
             Debug.LogWarning($"Passenger {passengerID}: No Renderer components found in children!");
         }
+    }
+
+    public void ActivatePassengerColor()
+    {
+        if (isColorActivated || availableColorMaterials == null || availableColorMaterials.Length == 0)
+            return;
+            
+        Material randomColorMaterial = availableColorMaterials[Random.Range(0, availableColorMaterials.Length)];
+        SetPassengerMaterial(randomColorMaterial);
+        isColorActivated = true;
+        
+        Debug.Log($"Passenger {passengerID} color activated to {randomColorMaterial.name}");
+    }
+
+    public bool IsColorActivated()
+    {
+        return isColorActivated;
     }
     
     public string GetPassengerTypeString()

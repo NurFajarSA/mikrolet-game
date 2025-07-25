@@ -166,6 +166,12 @@ public class CarMovement : MonoBehaviour
                 return;
             }
 
+            if (!IsAngkotFull())
+            {
+                passengerScript.ActivatePassengerColor();
+                Debug.Log($"Passenger {passengerScript.passengerID} color activated because angkot is not full");
+            }
+            
             Debug.Log($"Passenger {passengerScript.passengerID} ({passengerScript.GetPassengerTypeString()}) picked up!");
 
             currentPassengers.Add(passengerScript.passengerID);

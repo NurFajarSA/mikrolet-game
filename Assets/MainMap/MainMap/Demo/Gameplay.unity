@@ -8254,10 +8254,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passengerPrefab: {fileID: 887307621665759171, guid: 78e7e67bc636542cd98088f4b7997e16, type: 3}
-  passengerMaterials:
+  whiteMaterial: {fileID: 2100000, guid: a00982f44d1c447a7a0585fbde632190, type: 2}
+  colorMaterials:
   - {fileID: 2100000, guid: 195735171a02c4288b68ca1063665352, type: 2}
-  - {fileID: 2100000, guid: 6d7073470683647298b4173ca69a3e74, type: 2}
   - {fileID: 2100000, guid: 23e964d7d4e43421d8473ae75af32ab2, type: 2}
+  - {fileID: 2100000, guid: 6d7073470683647298b4173ca69a3e74, type: 2}
   - {fileID: 2100000, guid: 50168cb3686ca4e00a07e70558f8cc35, type: 2}
 --- !u!4 &157857079
 Transform:
@@ -57646,7 +57647,7 @@ Transform:
   m_GameObject: {fileID: 1120870641}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -76.6, y: 20, z: 55.3}
+  m_LocalPosition: {x: -76.6, y: 23, z: 55.3}
   m_LocalScale: {x: 4.2, y: 0.2, z: 4.2}
   m_ConstrainProportionsScale: 0
   m_Children: []

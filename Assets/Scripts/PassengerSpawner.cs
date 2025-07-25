@@ -5,7 +5,8 @@ public class PassengerSpawner : MonoBehaviour
     [SerializeField] private GameObject passengerPrefab;
     
     [Header("Passenger Materials")]
-    [SerializeField] private Material[] passengerMaterials;
+    [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Material[] colorMaterials;
 
     private int passengerCounter = 0;
 
@@ -73,9 +74,14 @@ public class PassengerSpawner : MonoBehaviour
 
     void Start()
     {
-       if (passengerMaterials == null || passengerMaterials.Length == 0)
+        if (whiteMaterial == null)
         {
-            Debug.LogWarning("PassengerSpawner: No passenger materials assigned! Using default materials.");
+            Debug.LogError("PassengerSpawner: White material is not assigned!");
+        }
+
+        if (colorMaterials == null || colorMaterials.Length == 0)
+        {
+            Debug.LogWarning("PassengerSpawner: No color materials assigned!");
         }
         
         // SpawnPassenger();
@@ -92,7 +98,7 @@ public class PassengerSpawner : MonoBehaviour
 
         passengerScript.Initialize(passengerCounter, destinationPoints[randDestIndex]);
         
-        SetRandomMaterialForPassenger(passengerScript);
+        SetMaterialsForPassenger(passengerScript);
         passengerCounter++;
     }
 
@@ -118,17 +124,20 @@ public class PassengerSpawner : MonoBehaviour
             Passenger passengerScript = newPassenger.GetComponent<Passenger>();
             passengerScript.Initialize(passengerCounter, destinationPoints[destIndex]);
             
-            SetRandomMaterialForPassenger(passengerScript);
+            SetMaterialsForPassenger(passengerScript);
             passengerCounter++;
         }
     }
     
-    private void SetRandomMaterialForPassenger(Passenger passenger)
+    private void SetMaterialsForPassenger(Passenger passenger)
     {
-        if (passengerMaterials != null && passengerMaterials.Length > 0)
+        if (whiteMaterial != null && colorMaterials != null && colorMaterials.Length > 0)
         {
-            Material randomMaterial = passengerMaterials[Random.Range(0, passengerMaterials.Length)];
-            passenger.SetPassengerMaterial(randomMaterial);
+            passenger.SetAvailableColorMaterials(whiteMaterial, colorMaterials);
+        }
+        else
+        {
+            Debug.LogError("PassengerSpawner: Missing material references for passenger " + passenger.passengerID);
         }
     }
 }
