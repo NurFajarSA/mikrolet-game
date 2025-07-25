@@ -74,44 +74,4 @@ public class DestinationSpawner : MonoBehaviour
         destinationCounter++;
         Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
     }
-
-    // Optional: Method to spawn destination at specific position with custom settings
-    public GameObject SpawnDestinationWithReturn(Vector3 destinationPoint, int passengerID, Material passengerMaterial)
-    {
-        GameObject newDestination = Instantiate(destinationPrefab, destinationPoint, Quaternion.identity);
-        Destination destinationScript = newDestination.GetComponent<Destination>();
-
-        destinationScript.Initialize(passengerID, destinationPoint);
-
-        if (passengerMaterial != null)
-        {
-            destinationScript.SetDestinationMaterial(passengerMaterial);
-        }
-
-        SpawnDestinationIndicator(newDestination.transform);
-        destinationCounter++;
-        
-        Debug.Log($"Destination {passengerID} spawned at {destinationPoint}");
-        return newDestination;
-    }
-
-    private void SpawnDestinationIndicator(Transform destinationTransform)
-    {
-        if (destinationIndicatorPrefab != null && carTransform != null)
-        {
-            GameObject indicator = Instantiate(destinationIndicatorPrefab);
-            DestinationIndicator indicatorScript = indicator.GetComponent<DestinationIndicator>();
-
-            if (indicatorScript != null)
-            {
-                indicatorScript.Initialize(destinationTransform, carTransform);
-                Debug.Log("Destination indicator spawned for destination at " + destinationTransform.position);
-            }
-            else
-            {
-                Debug.LogError("DestinationIndicator component not found on indicator prefab!");
-                Destroy(indicator);
-            }
-        }
-    }
 }

@@ -5,7 +5,7 @@ public class PassengerIndicator : MonoBehaviour
     private Transform carTransform;
     private Transform targetPassenger;
 
-    private const float MINIMAP_RADIUS = 20f;
+    private const float MINIMAP_RADIUS = 18f;
     private const float INDICATOR_HEIGHT = 22f;
 
     public void Initialize(Transform passenger, Transform car)

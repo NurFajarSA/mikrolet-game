@@ -99,7 +99,7 @@ public class PassengerSpawner : MonoBehaviour
         }
 
         // SpawnPassenger();
-        SpawnMultiplePassengers(6);
+        SpawnMultiplePassengers(20);
     }
 
     void SpawnPassenger()

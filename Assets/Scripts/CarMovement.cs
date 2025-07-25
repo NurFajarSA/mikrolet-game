@@ -44,10 +44,18 @@ public class CarMovement : MonoBehaviour
     
     private const int maxPassengers = 4;
 
+    private int money = 0;
+    public TMPro.TextMeshProUGUI moneyText;
+    private Vector3 moneyScale;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
+        
+        moneyScale = moneyText.transform.localScale;
+        money = 0;
+        SetMoneyText();
     }
 
     void Update()
@@ -253,6 +261,9 @@ public class CarMovement : MonoBehaviour
                 currentPassengerMaterials.RemoveAt(passengerIndex);
                 currentPassengerTypes.RemoveAt(passengerIndex);
 
+                money += 10;
+                SetMoneyText();
+
                 if (PassengerUIManager.Instance != null)
                 {
                     PassengerUIManager.Instance.RemovePassengerByMaterial(droppedPassengerMaterial);
@@ -274,6 +285,25 @@ public class CarMovement : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+    }
+
+    void SetMoneyText()
+    {
+        moneyText.text = $"{money}";
+
+        StopAllCoroutines();
+        StartCoroutine(Bounce());
+    }
+
+    System.Collections.IEnumerator Bounce()
+    {
+        moneyText.transform.localScale = moneyScale * 1.3f;
+        moneyText.color = Color.green;
+
+        yield return new WaitForSeconds(0.3f);
+
+        moneyText.transform.localScale = moneyScale;
+        moneyText.color = Color.white;
     }
 
     public int GetCurrentPassengerCount()

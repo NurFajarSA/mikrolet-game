@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text countdownText;
     public TMP_Text gameCounterText;
     private float countdownDuration = 1f;
-    private float gameTimeRemaining = 300f;
+    private float gameTimeRemaining = 180f;
     private bool isGameTimerRunning = false;
 
 

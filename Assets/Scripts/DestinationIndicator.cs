@@ -6,7 +6,7 @@ public class DestinationIndicator : MonoBehaviour
     private Transform targetDestination;
     private Renderer indicatorRenderer;
 
-    private const float MINIMAP_RADIUS = 20f;
+    private const float MINIMAP_RADIUS = 18f;
     private const float INDICATOR_HEIGHT = 23f;
 
     public void Initialize(Transform destination, Transform car)
