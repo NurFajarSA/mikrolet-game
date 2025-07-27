@@ -4,9 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class CarMovement : MonoBehaviour
 {
-    // public float verticalInput = 0f;
-    // public float horizontalInput = 0f;
-
     [Header("Speed Settings")]
     public float maxForwardSpeed = 50f;
     public float maxReverseSpeed = 30f;
@@ -36,11 +33,14 @@ public class CarMovement : MonoBehaviour
     private Rigidbody rb;
 
     [Header("Passenger & Destination Settings")]
+    [SerializeField] private PassengerSpawner passengerSpawner;
     [SerializeField] private DestinationSpawner destinationSpawner;
+    
     private List<int> currentPassengers = new List<int>();
     private List<Vector3> currentDestinations = new List<Vector3>();
     private List<Material> currentPassengerMaterials = new List<Material>();
     private List<Passenger.PassengerType> currentPassengerTypes = new List<Passenger.PassengerType>();
+    private List<Vector3> currentPassengerPickupLocations = new List<Vector3>();
     
     private const int maxPassengers = 4;
 
@@ -56,6 +56,11 @@ public class CarMovement : MonoBehaviour
         moneyScale = moneyText.transform.localScale;
         money = 0;
         SetMoneyText();
+
+        if (passengerSpawner == null)
+        {
+            passengerSpawner = FindFirstObjectByType<PassengerSpawner>();
+        }
     }
 
     void Update()
@@ -179,6 +184,7 @@ public class CarMovement : MonoBehaviour
             currentDestinations.Add(passengerScript.destination);
             currentPassengerMaterials.Add(passengerScript.passengerMaterial);
             currentPassengerTypes.Add(passengerScript.passengerType);
+            currentPassengerPickupLocations.Add(other.transform.position);
 
             if (PassengerUIManager.Instance != null)
             {
@@ -242,11 +248,13 @@ public class CarMovement : MonoBehaviour
 
                 int droppedPassengerID = currentPassengers[passengerIndex];
                 Material droppedPassengerMaterial = currentPassengerMaterials[passengerIndex];
+                Vector3 passengerPickupLocation = currentPassengerPickupLocations[passengerIndex];
 
                 currentPassengers.RemoveAt(passengerIndex);
                 currentDestinations.RemoveAt(passengerIndex);
                 currentPassengerMaterials.RemoveAt(passengerIndex);
                 currentPassengerTypes.RemoveAt(passengerIndex);
+                currentPassengerPickupLocations.RemoveAt(passengerIndex);
 
                 money += 10;
                 SetMoneyText();
@@ -257,6 +265,16 @@ public class CarMovement : MonoBehaviour
                 }
 
                 Debug.Log($"Passenger {droppedPassengerID} dropped off! Remaining: {currentPassengers.Count}/{maxPassengers}");
+
+                if (destinationSpawner != null)
+                {
+                    destinationSpawner.ReturnDestinationToPool(other.transform.position);
+                }
+
+                if (passengerSpawner != null)
+                {
+                    passengerSpawner.SpawnPassengerAfterDelay(passengerPickupLocation);
+                }
 
                 if (currentPassengers.Count < maxPassengers)
                 {

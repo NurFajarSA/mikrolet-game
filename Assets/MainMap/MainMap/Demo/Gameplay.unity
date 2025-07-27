@@ -858,6 +858,7 @@ MonoBehaviour:
   verticalInput: 0
   horizontalInput: 0
   destinationSpawner: {fileID: 800808392}
+  passengerSpawner: {fileID: 157857078}
   moneyText: {fileID: 414954974}
 --- !u!4 &11610482 stripped
 Transform:
@@ -8263,6 +8264,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 50168cb3686ca4e00a07e70558f8cc35, type: 2}
   passengerIndicatorPrefab: {fileID: 8010387611994246989, guid: 9ae26d1b47ebd481eaee86d375430e49, type: 3}
   carTransform: {fileID: 11610482}
+  passengerLocations: []
 --- !u!4 &157857079
 Transform:
   m_ObjectHideFlags: 0
@@ -41415,6 +41417,7 @@ MonoBehaviour:
   destinationPrefab: {fileID: 5468210226337050576, guid: b89b16cabd7de40fb87dd84f835aba2f, type: 3}
   destinationIndicatorPrefab: {fileID: 1945310368639799158, guid: 0e900a29e206a4063af9bb2c1a0fa972, type: 3}
   carTransform: {fileID: 11610482}
+  destinationLocations: []
 --- !u!4 &800808393
 Transform:
   m_ObjectHideFlags: 0
