@@ -12,7 +12,7 @@ public class CarMovement : MonoBehaviour
     public float coastingDrag = 10f;
 
     [Header("Steering")]
-    public float turnSpeed = 20f;
+    public float turnSpeed = 10f;
 
     [Header("Visual")]
     public Transform wheelFL;
