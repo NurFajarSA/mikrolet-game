@@ -5,14 +5,14 @@ using UnityEngine;
 public class CarMovement : MonoBehaviour
 {
     [Header("Speed Settings")]
-    public float maxForwardSpeed = 50f;
-    public float maxReverseSpeed = 30f;
+    public float maxForwardSpeed = 20f;
+    public float maxReverseSpeed = 10f;
     public float acceleration = 50f;
     public float braking = 80f;
     public float coastingDrag = 10f;
 
     [Header("Steering")]
-    public float turnSpeed = 10f;
+    public float turnSpeed = 100f;
 
     [Header("Visual")]
     public Transform wheelFL;

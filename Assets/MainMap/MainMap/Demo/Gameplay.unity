@@ -920,12 +920,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac028dd886126489fb6f1f5dd75eb1e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForwardSpeed: 50
-  maxReverseSpeed: 30
+  maxForwardSpeed: 20
+  maxReverseSpeed: 10
   acceleration: 50
   braking: 80
   coastingDrag: 10
-  turnSpeed: 10
+  turnSpeed: 100
   wheelFL: {fileID: 972148217}
   wheelFR: {fileID: 1554966110}
   idleSound: {fileID: 1616620352}
