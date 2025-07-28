@@ -56,8 +56,8 @@ public class PassengerUIManager : MonoBehaviour
                     passengerSlots[i].color = occupiedSlotColor;
                     slotMaterials[i] = null;
                 }
-                
-                Debug.Log($"Passenger {passengerID} added to UI slot {i}");
+
+                // Debug.Log($"Passenger {passengerID} added to UI slot {i}");
                 return true;
             }
         }
@@ -74,7 +74,7 @@ public class PassengerUIManager : MonoBehaviour
             {
                 passengerSlots[i].color = emptySlotColor;
                 slotMaterials[i] = null;
-                Debug.Log($"Passenger removed from UI slot {i} by material match");
+                // Debug.Log($"Passenger removed from UI slot {i} by material match");
                 return;
             }
         }
@@ -90,7 +90,7 @@ public class PassengerUIManager : MonoBehaviour
             {
                 passengerSlots[i].color = emptySlotColor;
                 slotMaterials[i] = null;
-                Debug.Log($"Passenger removed from UI slot {i}");
+                // Debug.Log($"Passenger removed from UI slot {i}");
                 return;
             }
         }

@@ -15,19 +15,24 @@ public class PassengerSpawner : MonoBehaviour
     [SerializeField] private GameObject passengerIndicatorPrefab;
     [SerializeField] private Transform carTransform;
 
-    // TAMBAH INI: Database locations untuk setiap area
     [Header("Location Database")]
     public List<Vector3> passengerLocations = new List<Vector3>();
     
-    // TAMBAH INI: Area-based locations untuk passenger
     private List<Vector3> passengerLocationsNE = new List<Vector3>();
     private List<Vector3> passengerLocationsNW = new List<Vector3>();
     private List<Vector3> passengerLocationsSE = new List<Vector3>();
     private List<Vector3> passengerLocationsSW = new List<Vector3>();
 
+    public enum Area
+    {
+        NorthEast,
+        NorthWest,
+        SouthEast,
+        SouthWest
+    }
+
     private int passengerCounter = 0;
 
-    // UBAH INI: Original spawn points sebagai pool locations
     private Vector3[] allPassengerSpawnPoints = new Vector3[]
     {
         // North East Passenger
@@ -59,61 +64,37 @@ public class PassengerSpawner : MonoBehaviour
         new Vector3(-156.7953f, 1.137f, 82.8793f),
     };
 
-    // TAMBAH INI: Area enum untuk identifikasi
-    public enum Area
-    {
-        NorthEast,
-        NorthWest,
-        SouthEast,
-        SouthWest
-    }
-
     void Start()
     {
-        // TAMBAH INI: Initialize area-based location pools
         InitializeAreaLocations();
-        
-        // UBAH INI: Spawn 6 passengers instead of 8
         SpawnMultiplePassengers(6);
     }
 
-    // TAMBAH INI: Initialize locations by area
     private void InitializeAreaLocations()
     {
-        // NE: indices 0-4
         for (int i = 0; i < 5; i++)
         {
             passengerLocationsNE.Add(allPassengerSpawnPoints[i]);
         }
-
-        // NW: indices 5-9
         for (int i = 5; i < 10; i++)
         {
             passengerLocationsNW.Add(allPassengerSpawnPoints[i]);
         }
-
-        // SE: indices 10-14
         for (int i = 10; i < 15; i++)
         {
             passengerLocationsSE.Add(allPassengerSpawnPoints[i]);
         }
-
-        // SW: indices 15-19
         for (int i = 15; i < 20; i++)
         {
             passengerLocationsSW.Add(allPassengerSpawnPoints[i]);
         }
-
-        Debug.Log($"Initialized passenger locations: NE={passengerLocationsNE.Count}, NW={passengerLocationsNW.Count}, SE={passengerLocationsSE.Count}, SW={passengerLocationsSW.Count}");
     }
 
-    // UBAH INI: Modified spawn multiple passengers
     void SpawnMultiplePassengers(int count)
     {
         int passengersPerArea = count / 4;
         int remainingPassengers = count % 4;
 
-        // Spawn evenly across areas
         SpawnPassengersFromArea(Area.NorthEast, passengersPerArea + (remainingPassengers > 0 ? 1 : 0));
         if (remainingPassengers > 0) remainingPassengers--;
 
@@ -128,7 +109,6 @@ public class PassengerSpawner : MonoBehaviour
         Debug.Log($"Spawned {count} passengers. Current passenger locations in use: {passengerLocations.Count}");
     }
 
-    // TAMBAH INI: Spawn passengers from specific area
     private void SpawnPassengersFromArea(Area area, int count)
     {
         List<Vector3> areaLocations = GetAreaLocations(area);
@@ -138,11 +118,9 @@ public class PassengerSpawner : MonoBehaviour
             int randomIndex = Random.Range(0, areaLocations.Count);
             Vector3 spawnPos = areaLocations[randomIndex];
 
-            // Remove from area pool and add to active locations
             areaLocations.RemoveAt(randomIndex);
             passengerLocations.Add(spawnPos);
 
-            // Get destination from different areas
             Vector3 destinationPos = GetDestinationFromDifferentArea(area);
 
             GameObject newPassenger = Instantiate(passengerPrefab, spawnPos, Quaternion.identity);
@@ -152,12 +130,11 @@ public class PassengerSpawner : MonoBehaviour
             SetMaterialsForPassenger(passengerScript);
             SpawnPassengerIndicator(newPassenger.transform);
 
-            Debug.Log($"Spawned passenger {passengerCounter} from {area} area at {spawnPos}");
+            Debug.Log($"Spawned passenger {passengerCounter} from {area}");
             passengerCounter++;
         }
     }
 
-    // TAMBAH INI: Get area locations by enum
     private List<Vector3> GetAreaLocations(Area area)
     {
         switch (area)
@@ -173,13 +150,7 @@ public class PassengerSpawner : MonoBehaviour
     private Vector3 GetDestinationFromDifferentArea(Area passengerArea)
     {
         DestinationSpawner destSpawner = FindFirstObjectByType<DestinationSpawner>();
-        if (destSpawner != null)
-        {
-            return destSpawner.GetDestinationFromDifferentArea((DestinationSpawner.Area)passengerArea);
-        }
-
-        Debug.LogError("DestinationSpawner not found!");
-        return Vector3.zero;
+        return destSpawner.GetDestinationFromDifferentArea((DestinationSpawner.Area)passengerArea);
     }
 
     public void SpawnPassengerAfterDelay(Vector3 droppedPassengerLocation)
@@ -221,7 +192,7 @@ public class PassengerSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No available locations to spawn new passenger!");
+            // Debug.LogWarning("No available locations to spawn new passenger!");
         }
     }
 

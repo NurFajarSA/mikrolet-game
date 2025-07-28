@@ -28,8 +28,8 @@ public class CarMovement : MonoBehaviour
     [Range(0.1f, 2.0f)] public float reverseMaxPitch = 0.6f;
 
     private float currentSpeed = 0f;
-    public float verticalInput;
-    public float horizontalInput;
+    public float verticalInput = 0f;
+    public float horizontalInput = 0f;
     private Rigidbody rb;
 
     [Header("Passenger & Destination Settings")]
@@ -74,8 +74,8 @@ public class CarMovement : MonoBehaviour
             reverseSound.volume = 0f;
             return;
         }
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
+        // verticalInput = Input.GetAxis("Vertical");
+        // horizontalInput = Input.GetAxis("Horizontal");
 
         ApplySteering();
         ApplyWheelVisual();
@@ -186,13 +186,9 @@ public class CarMovement : MonoBehaviour
             currentPassengerTypes.Add(passengerScript.passengerType);
             currentPassengerPickupLocations.Add(other.transform.position);
 
-            if (PassengerUIManager.Instance != null)
-            {
-                PassengerUIManager.Instance.AddPassenger(passengerScript.passengerID, passengerScript.passengerMaterial);
-            }
+            PassengerUIManager.Instance.AddPassenger(passengerScript.passengerID, passengerScript.passengerMaterial);
 
             other.gameObject.SetActive(false);
-
             if (destinationSpawner != null)
             {
                 destinationSpawner.SpawnDestination(passengerScript.destination, passengerScript.passengerID, passengerScript.passengerMaterial);
@@ -204,11 +200,8 @@ public class CarMovement : MonoBehaviour
 
             if (currentPassengers.Count >= maxPassengers)
             {
-                if (PassengerCollisionManager.Instance != null)
-                {
-                    PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
-                    Debug.Log("Angkot is full! Passenger collisions disabled.");
-                }
+                PassengerCollisionManager.Instance.DisableAllPassengerCollisions();
+                Debug.Log("Angkot is full! Passenger collisions disabled.");
             }
             
             PassengerIndicator[] indicators = Object.FindObjectsByType<PassengerIndicator>(FindObjectsSortMode.None);
@@ -259,32 +252,18 @@ public class CarMovement : MonoBehaviour
                 money += 10;
                 SetMoneyText();
 
-                if (PassengerUIManager.Instance != null)
-                {
-                    PassengerUIManager.Instance.RemovePassengerByMaterial(droppedPassengerMaterial);
-                }
-
                 Debug.Log($"Passenger {droppedPassengerID} dropped off! Remaining: {currentPassengers.Count}/{maxPassengers}");
 
-                if (destinationSpawner != null)
-                {
-                    destinationSpawner.ReturnDestinationToPool(other.transform.position);
-                }
-
-                if (passengerSpawner != null)
-                {
-                    passengerSpawner.SpawnPassengerAfterDelay(passengerPickupLocation);
-                }
+                PassengerUIManager.Instance.RemovePassengerByMaterial(droppedPassengerMaterial);
+                destinationSpawner.ReturnDestinationToPool(droppedPassengerID, other.transform.position);
+                passengerSpawner.SpawnPassengerAfterDelay(passengerPickupLocation);
 
                 if (currentPassengers.Count < maxPassengers)
                 {
-                    if (PassengerCollisionManager.Instance != null)
-                    {
-                        PassengerCollisionManager.Instance.EnableAllPassengerCollisions();
-                        Debug.Log("Space available! Passenger collisions enabled.");
+                    PassengerCollisionManager.Instance.EnableAllPassengerCollisions();
+                    Debug.Log("Space available! Passenger collisions enabled.");
 
-                        PassengerCollisionManager.Instance.LogCurrentCollisionStates();
-                    }
+                    PassengerCollisionManager.Instance.LogCurrentCollisionStates();
                 }
             }
 

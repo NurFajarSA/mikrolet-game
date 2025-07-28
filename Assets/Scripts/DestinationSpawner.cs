@@ -17,6 +17,14 @@ public class DestinationSpawner : MonoBehaviour
     private List<Vector3> destinationLocationsSE = new List<Vector3>();
     private List<Vector3> destinationLocationsSW = new List<Vector3>();
 
+    public enum Area
+    {
+        NorthEast,
+        NorthWest,
+        SouthEast,
+        SouthWest
+    }
+
     private int destinationCounter = 0;
 
     private Vector3[] allDestinationPoints = new Vector3[]
@@ -50,14 +58,6 @@ public class DestinationSpawner : MonoBehaviour
         new Vector3(-194.3153f, 0.1838198f, 118.1553f),
     };
 
-    public enum Area
-    {
-        NorthEast,
-        NorthWest,
-        SouthEast,
-        SouthWest
-    }
-
     void Start()
     {
         InitializeAreaDestinations();
@@ -81,8 +81,6 @@ public class DestinationSpawner : MonoBehaviour
         {
             destinationLocationsSW.Add(allDestinationPoints[i]);
         }
-
-        Debug.Log($"Initialized destination locations: NE={destinationLocationsNE.Count}, NW={destinationLocationsNW.Count}, SE={destinationLocationsSE.Count}, SW={destinationLocationsSW.Count}");
     }
 
     public Vector3 GetDestinationFromDifferentArea(Area passengerArea)
@@ -100,7 +98,7 @@ public class DestinationSpawner : MonoBehaviour
 
         if (availableAreas.Count == 0)
         {
-            Debug.LogWarning("No available destination areas! Using random destination.");
+            // Debug.LogWarning("No available destination areas! Using random destination.");
             return allDestinationPoints[Random.Range(0, allDestinationPoints.Length)];
         }
 
@@ -146,10 +144,11 @@ public class DestinationSpawner : MonoBehaviour
         indicatorScript.SetIndicatorMaterial(passengerMaterial);
 
         destinationCounter++;
-        Debug.Log($"Destination {destinationScript.destinationID} spawned at {destinationPoint}. Active destinations: {destinationLocations.Count}");
+        Area area = DetermineAreaFromLocation(destinationPoint);
+        Debug.Log($"Destination {destinationScript.destinationID} spawned at {area}. Active destinations: {destinationLocations.Count}");
     }
 
-    public void ReturnDestinationToPool(Vector3 destinationLocation)
+    public void ReturnDestinationToPool(int destinationID, Vector3 destinationLocation)
     {
         if (destinationLocations.Contains(destinationLocation))
         {
@@ -160,7 +159,7 @@ public class DestinationSpawner : MonoBehaviour
         List<Vector3> areaDestinations = GetAreaDestinations(destinationArea);
         areaDestinations.Add(destinationLocation);
 
-        Debug.Log($"Destination location {destinationLocation} returned to {destinationArea} pool. Active destinations: {destinationLocations.Count}");
+        Debug.Log($"Destination {destinationID} returned to {destinationArea} pool. Active destinations: {destinationLocations.Count}");
     }
 
     private Area DetermineAreaFromLocation(Vector3 location)
