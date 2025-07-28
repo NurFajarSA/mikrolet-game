@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public AudioClip startMusic;
     public AudioClip backgroundMusic;
 
+    [Header("Score")]
+    public TMP_Text scoreText;
 
     void Awake()
     {
@@ -60,6 +62,8 @@ public class GameManager : MonoBehaviour
                 // TODO: Panggil GameOver atau logic selesai game
                 carMovement.enabled = false;
                 MuteAllEngineSounds();
+
+                scoreText.text = carMovement.GetMoneyText();
 
                 if (finishScreen != null)
                 {

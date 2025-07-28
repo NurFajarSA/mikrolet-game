@@ -279,6 +279,11 @@ public class CarMovement : MonoBehaviour
         StartCoroutine(Bounce());
     }
 
+    public string GetMoneyText()
+    {
+        return moneyText.text;
+    }
+
     System.Collections.IEnumerator Bounce()
     {
         moneyText.transform.localScale = moneyScale * 1.3f;
