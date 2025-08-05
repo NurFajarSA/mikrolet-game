@@ -3,7 +3,32 @@ guid: b32addc13f9f84e4abf9e72534a75676
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainVan_geoMat
+    second: {fileID: 2100000, guid: 3f07967fb796862478a795db2e019be5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheel_B_L_geoMat
+    second: {fileID: 2100000, guid: f9a08e3cf35d11340ba046dc83b5b219, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheel_B_R_geoMat
+    second: {fileID: 2100000, guid: f9a08e3cf35d11340ba046dc83b5b219, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheel_F_L_geoMat
+    second: {fileID: 2100000, guid: f9a08e3cf35d11340ba046dc83b5b219, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheel_F_R_geoMat
+    second: {fileID: 2100000, guid: f9a08e3cf35d11340ba046dc83b5b219, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
