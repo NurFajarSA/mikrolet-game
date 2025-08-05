@@ -1,23 +1,13 @@
 fileFormatVersion: 2
-guid: 31cc9624680b44e18833e10417eee0af
+guid: d921a2e50e2e9ae438125c819207a901
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Apartment01_geo_Asset_grpMat
-    second: {fileID: 2100000, guid: cc9fb473dcabe4f1ab38fe41f197d47a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert3SG
-    second: {fileID: 2100000, guid: f3a3c5aefae7c4282b0f63f8177fa475, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
-    materialName: 2
-    materialSearch: 0
+    materialName: 0
+    materialSearch: 1
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4

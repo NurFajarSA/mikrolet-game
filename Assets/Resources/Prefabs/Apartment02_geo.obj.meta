@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 1c29083bd1ae64042bbf118d919f322e
+guid: e3324cb6115845b47bc3f7272aceef9b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Apartment02_geo_Asset_grpMat
-    second: {fileID: 2100000, guid: 6b4ec35e9478b4213bdc3b3a5c00e360, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

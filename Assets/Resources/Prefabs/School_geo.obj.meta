@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 14a3798031e1d4d4292f5617c43cd0a3
+guid: 8ea4f55962dff0a47bb6691a588d3277
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: School_grp_Asset_grpMat
-    second: {fileID: 2100000, guid: 6b4ec35e9478b4213bdc3b3a5c00e360, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 4e8f140332c504835bed1668d373d8a0
+guid: 892d8a8dc9566b74f909d632c8058260
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Office_geo_Asset_grpMat
-    second: {fileID: 2100000, guid: b7b2a7b99bdc94b93a3ac87953f3ef4e, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
